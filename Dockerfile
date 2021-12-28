@@ -16,3 +16,6 @@ RUN adduser --disabled-password \
 WORKDIR ${HOME}
 
 COPY . ${HOME}
+
+RUN pip install --upgrade pip
+RUN pip install .
