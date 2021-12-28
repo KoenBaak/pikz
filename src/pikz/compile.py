@@ -33,8 +33,8 @@ def compile(filepath: str,
 
     if compile_process.returncode != 0:
         out = compile_process.stdout
-        error_part = out[out.find("!"):]
-        raise LatexCompileError(error_part)
+        error_msg = out[out.find("!"):]
+        raise LatexCompileError(error_msg)
 
     basename = os.path.basename(filepath)
     base, _ = os.path.splitext(basename)
