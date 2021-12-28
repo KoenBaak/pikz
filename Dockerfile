@@ -1,7 +1,5 @@
 FROM python:3.8-slim
 
-RUN pip install --no-cache notebook
-
 ### create user with a home directory
 ARG NB_USER=nbuser
 ARG NB_UID=1000
@@ -22,4 +20,5 @@ RUN chown -R ${NB_UID} ${HOME}
 USER ${NB_USER}
 
 RUN pip install --upgrade pip
+RUN pip install --no-cache notebook
 RUN pip install .
