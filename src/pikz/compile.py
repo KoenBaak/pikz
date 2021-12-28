@@ -11,7 +11,7 @@ class LatexCompileError(RuntimeError):
     pass
 
 
-def _clean_files(dir: str, basename: str):
+def _clean_files(dir: str, basename: str) -> None:
     for ext in AUX_EXTENSIONS:
         target = f"{basename}.{ext}"
         os.remove(os.path.join(dir, target))
