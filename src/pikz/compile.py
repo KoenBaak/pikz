@@ -11,9 +11,9 @@ class LatexCompileError(RuntimeError):
     pass
 
 
-def compile(filepath: str,
-            outputdir: str = None,
-            clean_files: bool = True) -> str:
+def compile_latex(filepath: str,
+                  outputdir: str = None,
+                  clean_files: bool = True) -> str:
 
     if not os.path.exists(filepath):
         raise FileNotFoundError
