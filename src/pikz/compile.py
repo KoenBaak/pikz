@@ -11,6 +11,12 @@ class LatexCompileError(RuntimeError):
     pass
 
 
+def _clean_files(dir: str, basename: str):
+    for ext in AUX_EXTENSIONS:
+        target = f"{basename}.{ext}"
+        os.remove(os.path.join(dir, target))
+
+
 def compile_latex(filepath: str,
                   outputdir: str = None,
                   clean_files: bool = True) -> str:
@@ -24,6 +30,9 @@ def compile_latex(filepath: str,
     if outputdir is None:
         outputdir = os.path.dirname(filepath)
 
+    basename = os.path.basename(filepath)
+    base, _ = os.path.splitext(basename)
+
     command = f"pdflatex -output-directory={outputdir} -interaction=nonstopmode {filepath}".split()
 
     compile_process = subprocess.run(command,
@@ -34,14 +43,11 @@ def compile_latex(filepath: str,
     if compile_process.returncode != 0:
         out = compile_process.stdout
         error_msg = out[out.find("!"):]
+        if clean_files:
+            _clean_files(outputdir, base)
         raise LatexCompileError(error_msg)
 
-    basename = os.path.basename(filepath)
-    base, _ = os.path.splitext(basename)
-
     if clean_files:
-        for ext in AUX_EXTENSIONS:
-            target = f"{base}.{ext}"
-            os.remove(os.path.join(outputdir, target))
+        _clean_files(outputdir, base)
 
     return os.path.join(outputdir, f"{base}.pdf")
