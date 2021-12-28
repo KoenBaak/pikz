@@ -3,7 +3,7 @@ FROM python:3.8-slim
 RUN pip install --upgrade pip
 RUN pip install --no-cache notebook
 
-RUN sudo apt-get install texlive-latex-base
+RUN apt-get install texlive-latex-base
 
 ### create user with a home directory
 ARG NB_USER=nbuser
