@@ -1,4 +1,7 @@
+from typing import Union
 import math
+
+COORD_ARG = Union['Coordinate', tuple, complex]
 
 
 def Polar(angle: float, radius: float, rad: bool = False):
@@ -53,6 +56,14 @@ class Coordinate:
         if len(args) == 2:
             return cls(*args)
         raise ValueError(f"Can not transform input {args} to a Pikz Coordinate")
+
+    def to_str(self, precision: int = 3) -> str:
+        return "({x:.{precision}f}, {y:.{precision}f})".format(x=self._x,
+                                                               y=self._y,
+                                                               precision=precision)
+
+    def __str__(self):
+        return f"({self._x}, {self._y})"
 
     def __repr__(self):
         return f"<Coordinate ({self._x:.3f}, {self._y:.3f})>"

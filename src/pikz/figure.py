@@ -23,9 +23,9 @@ class Figure:
     def tikzpicture_body(self) -> str:
         lines = []
         for e in self._elements:
-            lines.append(e.tikz_draw())
-            if isinstance(e, Fillable):
+            if isinstance(e, Fillable) and e.fill is not None:
                 lines.append(e.tikz_fill())
+            lines.append(e.tikz_draw())
         return "\n".join(lines)
 
     def to_latex(self) -> str:
@@ -76,7 +76,7 @@ class Figure:
     def _repr_html_(self):
         pdf_path = self.build(tex_dir=_secret_dir())
         rel_path = os.path.relpath(pdf_path)
-        return f'<iframe> src="{rel_path}" width=300 height=300></iframe>'
+        return f'<iframe src="{rel_path}" width=300 height=300></iframe>'
 
     def __repr__(self):
         return f"<pikz.figure.Figure '{self.name}' with {len(self._elements)} elements>"
