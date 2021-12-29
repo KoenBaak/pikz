@@ -27,11 +27,9 @@ def compile_latex(filepath: str,
     if shutil.which("pdflatex") is None:
         raise RuntimeError(f"pdf latex needs to be installed")
 
-    if outputdir is None:
-        outputdir = os.path.dirname(filepath)
-
-    basename = os.path.basename(filepath)
-    base, _ = os.path.splitext(basename)
+    outputdir = outputdir or os.path.dirname(filepath)
+    filename = os.path.basename(filepath)
+    base, _ = os.path.splitext(filename)
 
     command = f"pdflatex -output-directory={outputdir} -interaction=nonstopmode {filepath}".split()
 
