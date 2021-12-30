@@ -43,6 +43,13 @@ class Drawable(ABC):
                   thickness: str = None) -> str:
         pass
 
+    @abstractmethod
+    def translate(self,
+                  x: float = 0,
+                  y: float = 0,
+                  inplace: bool = False):
+        pass
+
 
 class Fillable(Drawable):
 

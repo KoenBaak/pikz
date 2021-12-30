@@ -62,6 +62,22 @@ class Coordinate:
                                                                y=self._y,
                                                                precision=precision)
 
+    def translate(self,
+                  x: float = 0,
+                  y: float = 0):
+
+        return self + (x, y)
+
+    def __add__(self, other):
+        other = Coordinate.from_args(other)
+        return Coordinate(self._x + other._x, self._y + other._y)
+
+    def __radd__(self, other):
+        return self + other
+
+    def __complex__(self):
+        return self._x + self._y * 1j
+
     def __str__(self):
         return f"({self._x}, {self._y})"
 

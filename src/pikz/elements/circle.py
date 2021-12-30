@@ -30,5 +30,22 @@ class Circle(Fillable):
     def tikz_fill(self, fill: str = None):
         return f"{self.fill_command(fill)} {self._center} circle ({self._radius});"
 
+    def translate(self,
+                  x: float = 0,
+                  y: float = 0,
+                  inplace: bool = False):
+
+        center = self._center.translate(x, y)
+        if inplace:
+            self._center = center
+            return
+
+        return Circle(center=center,
+                      radius=self.radius,
+                      style=self.style,
+                      thickness=self.thickness,
+                      color=self.color,
+                      fill=self.fill)
+
     def __repr__(self):
         return f"<Circle at {self._center} with radius {self._radius}>"
